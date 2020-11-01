@@ -5,9 +5,17 @@ import (
 	"time"
 )
 
+func listen(messages chan string) {
+	for {
+		msg := <-messages
+		fmt.Println(msg)
+	}
+}
 func main() {
+	messages := make(chan string)
+	go listen(messages)
 
-	ticker := time.NewTicker(1000 * time.Millisecond)
+	ticker := time.NewTicker(100 * time.Millisecond)
 	done := make(chan bool)
 
 	go func() {
@@ -17,6 +25,7 @@ func main() {
 				return
 			case t := <-ticker.C:
 				fmt.Println("Queue starting", t)
+				messages <- "heelo im BIOS"
 			}
 		}
 	}()
@@ -25,6 +34,7 @@ func main() {
 	//ticker.Stop()
 	//done <- true
 	//fmt.Println("Ticker stopped")
+
 	for {
 	}
 }
