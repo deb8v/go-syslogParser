@@ -5,10 +5,15 @@ import (
 	"time"
 )
 
+func messagePrinter(i string) {
+	fmt.Println(i)
+}
+
 func listen(messages chan string) {
 	for { //в вечном цикле ждём что появилось нового
 		msg := <-messages
-		fmt.Println(msg)
+
+		go messagePrinter(msg)
 	}
 }
 func main() {
