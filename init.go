@@ -127,7 +127,7 @@ var RFCList = map[int8]string{
 	0: "RAW",
 }
 
-func parseMessage(data string, pid uint64, queueChannel chan uint64) {
+func parseMessage(data string, pid uint64) {
 	fmt.Println(pid, " started (thread)")
 	var syslogMeta struct {
 		raw          string
@@ -225,11 +225,12 @@ func parseMessage(data string, pid uint64, queueChannel chan uint64) {
 		fmt.Printf("\\-timeUTC:  \t%s\n", syslogMeta.timeUTC)
 		fmt.Printf("\\-timeNow:  \t%d\n", syslogMeta.timeNow)
 		fmt.Printf("\\-topics:   \t%s\n", syslogMeta.topic)
-		fmt.Printf("\\-message:  \t%s\n", syslogMeta.msg)
 	*/
+	fmt.Printf("\\-message:  \t%s\n", syslogMeta.msg)
 
-	queueChannel <- pid
-	fmt.Println(pid, " ended (thread)")
+	fmt.Println(pid, " wait (thread)")
+	time.Sleep(20 * time.Second)
+	fmt.Println(pid, " end (thread)")
 }
 func queueChannel(c chan uint64) {
 	for {
@@ -237,21 +238,24 @@ func queueChannel(c chan uint64) {
 		fmt.Println(newMessage, " ended")
 	}
 }
-func queueManagaer(c chan uint64) {
 
-	var pid uint64 = 0
-	for len(queue) > 0 {
-		fmt.Print(len(queue)) // Первый элемент
-		go parseMessage(queue[0], pid, c)
-		queue[0] = ""
-		queue = queue[1:] // Удаление из очереди
-		pid += 1
+func listen(messages chan string, done chan bool) {
+	for { //в вечном цикле ждём что появилось нового
+		select {
+		case <-done:
+			return
+		case msg := <-messages: //получаем из ticker дату
+			go parseMessage(msg, 55)
+		}
 	}
-	fmt.Print("queDeath") // Первый элемент
+
 }
+
 func main() {
-	queueChannel := make(chan uint64)
-	go queueManagaer(queueChannel)
+
+	messages := make(chan string)
+	done := make(chan bool)
+	go listen(messages, done)
 
 	conn, err := net.ListenUDP("udp", &net.UDPAddr{
 		Port: 514,
@@ -273,7 +277,7 @@ func main() {
 
 		data := strings.TrimSpace(string(message[:rlen]))
 		//dataFrom := strings.Count(data, ':')
-		queue = append(queue, data)
+		messages <- data
 		print(len(queue))
 		fmt.Printf("from %s\n\n", remote)
 	}
