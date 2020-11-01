@@ -6,14 +6,14 @@ import (
 )
 
 func listen(messages chan string) {
-	for {
+	for { //в вечном цикле ждём что появилось нового
 		msg := <-messages
 		fmt.Println(msg)
 	}
 }
 func main() {
 	messages := make(chan string)
-	go listen(messages)
+	go listen(messages) //запускаем отдельный поток который слушает messages
 
 	ticker := time.NewTicker(100 * time.Millisecond)
 	done := make(chan bool)
@@ -23,9 +23,9 @@ func main() {
 			select {
 			case <-done:
 				return
-			case t := <-ticker.C:
+			case t := <-ticker.C: //получаем из ticker дату
 				fmt.Println("Queue starting", t)
-				messages <- "heelo im BIOS"
+				messages <- "heelo im BIOS" //шлем в messages сообщение
 			}
 		}
 	}()
