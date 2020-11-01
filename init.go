@@ -8,6 +8,8 @@ import (
 	"time"
 )
 
+var queue []string
+
 func getTopicsfromRAW(raw string) string {
 	e := strings.Split(raw, ":")[0]
 	e = strings.ReplaceAll(e, " ", ",")
@@ -125,7 +127,8 @@ var RFCList = map[int8]string{
 	0: "RAW",
 }
 
-func parseMessage(data string) {
+func parseMessage(data string, pid uint64, queueChannel chan uint64) {
+	fmt.Println(pid, " started (thread)")
 	var syslogMeta struct {
 		raw          string
 		priority     int8
@@ -211,19 +214,45 @@ func parseMessage(data string) {
 	syslogMeta.priorityName = getStatusByDict(syslogMeta.priority)
 	syslogMeta.priorityName = RFCList[syslogMeta.typeOf]
 	//fmt.Printf("typeOf:   %d\n", pexInt)
-	fmt.Printf("->:  %s\n", syslogMeta.raw)
-	fmt.Printf("\\-typeOf:   \t%d\n", syslogMeta.typeOf)
-	fmt.Printf("\\-tpe.OfNme:\t%d\n", syslogMeta.typeOf)
-	fmt.Printf("\\-subject:  \t%d\n", syslogMeta.subject)
-	fmt.Printf("\\-priority: \t%d\n", syslogMeta.priority)
-	fmt.Printf("\\-pri. name:\t%s\n", syslogMeta.priorityName)
-	fmt.Printf("\\-timestamp:\t%d\n", syslogMeta.timestamp)
-	fmt.Printf("\\-timeUTC:  \t%s\n", syslogMeta.timeUTC)
-	fmt.Printf("\\-timeNow:  \t%d\n", syslogMeta.timeNow)
-	fmt.Printf("\\-topics:   \t%s\n", syslogMeta.topic)
-	fmt.Printf("\\-message:  \t%s\n", syslogMeta.msg)
+	/*
+		fmt.Printf("->:  %s\n", syslogMeta.raw)
+		fmt.Printf("\\-typeOf:   \t%d\n", syslogMeta.typeOf)
+		fmt.Printf("\\-tpe.OfNme:\t%d\n", syslogMeta.typeOf)
+		fmt.Printf("\\-subject:  \t%d\n", syslogMeta.subject)
+		fmt.Printf("\\-priority: \t%d\n", syslogMeta.priority)
+		fmt.Printf("\\-pri. name:\t%s\n", syslogMeta.priorityName)
+		fmt.Printf("\\-timestamp:\t%d\n", syslogMeta.timestamp)
+		fmt.Printf("\\-timeUTC:  \t%s\n", syslogMeta.timeUTC)
+		fmt.Printf("\\-timeNow:  \t%d\n", syslogMeta.timeNow)
+		fmt.Printf("\\-topics:   \t%s\n", syslogMeta.topic)
+		fmt.Printf("\\-message:  \t%s\n", syslogMeta.msg)
+	*/
+
+	queueChannel <- pid
+	fmt.Println(pid, " ended (thread)")
+}
+func queueChannel(c chan uint64) {
+	for {
+		newMessage := <-c
+		fmt.Println(newMessage, " ended")
+	}
+}
+func queueManagaer(c chan uint64) {
+
+	var pid uint64 = 0
+	for len(queue) > 0 {
+		fmt.Print(len(queue)) // Первый элемент
+		go parseMessage(queue[0], pid, c)
+		queue[0] = ""
+		queue = queue[1:] // Удаление из очереди
+		pid += 1
+	}
+	fmt.Print("queDeath") // Первый элемент
 }
 func main() {
+	queueChannel := make(chan uint64)
+	go queueManagaer(queueChannel)
+
 	conn, err := net.ListenUDP("udp", &net.UDPAddr{
 		Port: 514,
 		IP:   net.ParseIP("0.0.0.0"),
@@ -244,7 +273,9 @@ func main() {
 
 		data := strings.TrimSpace(string(message[:rlen]))
 		//dataFrom := strings.Count(data, ':')
-		parseMessage(data)
+		queue = append(queue, data)
+		print(len(queue))
 		fmt.Printf("from %s\n\n", remote)
 	}
+
 }
