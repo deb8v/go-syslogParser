@@ -1,0 +1,11 @@
+panic: runtime error: index out of range [3] with length 3
+
+goroutine 116917 [running]:
+main.getMsgfromRFC3164(0xc00024a000, 0x2d, 0x0, 0x0)
+	c:/Users/yaros/Desktop/golang/go-syslogParser/init.go:96 +0xe5
+main.parseMessage(0xc00024a000, 0x2d, 0x37)
+	c:/Users/yaros/Desktop/golang/go-syslogParser/init.go:194 +0x591
+created by main.listen
+	c:/Users/yaros/Desktop/golang/go-syslogParser/init.go:248 +0x16f
+could not remove c:\Users\yaros\Desktop\golang\go-syslogParser\__debug_bin: remove c:\Users\yaros\Desktop\golang\go-syslogParser\__debug_bin: Access is denied.
+Process exiting with code: 0

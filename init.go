@@ -214,22 +214,22 @@ func parseMessage(data string, pid uint64) {
 	syslogMeta.priorityName = getStatusByDict(syslogMeta.priority)
 	syslogMeta.priorityName = RFCList[syslogMeta.typeOf]
 	//fmt.Printf("typeOf:   %d\n", pexInt)
-	/*
-		fmt.Printf("->:  %s\n", syslogMeta.raw)
-		fmt.Printf("\\-typeOf:   \t%d\n", syslogMeta.typeOf)
-		fmt.Printf("\\-tpe.OfNme:\t%d\n", syslogMeta.typeOf)
-		fmt.Printf("\\-subject:  \t%d\n", syslogMeta.subject)
-		fmt.Printf("\\-priority: \t%d\n", syslogMeta.priority)
-		fmt.Printf("\\-pri. name:\t%s\n", syslogMeta.priorityName)
-		fmt.Printf("\\-timestamp:\t%d\n", syslogMeta.timestamp)
-		fmt.Printf("\\-timeUTC:  \t%s\n", syslogMeta.timeUTC)
-		fmt.Printf("\\-timeNow:  \t%d\n", syslogMeta.timeNow)
-		fmt.Printf("\\-topics:   \t%s\n", syslogMeta.topic)
-	*/
+
+	fmt.Printf("->:  %s\n", syslogMeta.raw)
+	fmt.Printf("\\-typeOf:   \t%d\n", syslogMeta.typeOf)
+	fmt.Printf("\\-tpe.OfNme:\t%d\n", syslogMeta.typeOf)
+	fmt.Printf("\\-subject:  \t%d\n", syslogMeta.subject)
+	fmt.Printf("\\-priority: \t%d\n", syslogMeta.priority)
+	fmt.Printf("\\-pri. name:\t%s\n", syslogMeta.priorityName)
+	fmt.Printf("\\-timestamp:\t%d\n", syslogMeta.timestamp)
+	fmt.Printf("\\-timeUTC:  \t%s\n", syslogMeta.timeUTC)
+	fmt.Printf("\\-timeNow:  \t%d\n", syslogMeta.timeNow)
+	fmt.Printf("\\-topics:   \t%s\n", syslogMeta.topic)
+
 	fmt.Printf("\\-message:  \t%s\n", syslogMeta.msg)
 
-	fmt.Println(pid, " wait (thread)")
-	time.Sleep(20 * time.Second)
+	//fmt.Println(pid, " wait (thread)")
+	//time.Sleep(20 * time.Second)
 	fmt.Println(pid, " end (thread)")
 }
 func queueChannel(c chan uint64) {
