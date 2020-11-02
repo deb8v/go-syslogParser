@@ -1,11 +1,58 @@
-panic: runtime error: index out of range [3] with length 3
-
-goroutine 116917 [running]:
-main.getMsgfromRFC3164(0xc00024a000, 0x2d, 0x0, 0x0)
-	c:/Users/yaros/Desktop/golang/go-syslogParser/init.go:96 +0xe5
-main.parseMessage(0xc00024a000, 0x2d, 0x37)
-	c:/Users/yaros/Desktop/golang/go-syslogParser/init.go:194 +0x591
+fixed======================
+55  started (thread) dns,packet <tracker.tiny-vps.com:CNAME:422=tardis.tiny-vps.com>
+0panic: runtime error: slice bounds out of range [:1] with length 0
+-------
+goroutine 56 [running]:
+main.parseMessage(0xc00028a040, 0x3f, 0x37)
+	c:/Users/yaros/Desktop/golang/go-syslogParser/init.go:171 +0x160f
 created by main.listen
-	c:/Users/yaros/Desktop/golang/go-syslogParser/init.go:248 +0x16f
+	c:/Users/yaros/Desktop/golang/go-syslogParser/init.go:256 +0x16f
+Process exiting with code: 0
+
+fixed========================
+55  started (thread) dns,packet <tracker.blackunicorn.xyz:A:227=208.94.36.95>
+0panic: runtime error: slice bounds out of range [:1] with length 0
+--------
+goroutine 40 [running]:
+main.parseMessage(0xc000200340, 0x38, 0x37)
+	c:/Users/yaros/Desktop/golang/go-syslogParser/init.go:166 +0x160f
+created by main.listen
+	c:/Users/yaros/Desktop/golang/go-syslogParser/init.go:251 +0x16f
+could not remove c:\Users\yaros\Desktop\golang\go-syslogParser\__debug_bin: remove c:\Users\yaros\Desktop\golang\go-syslogParser\__debug_bin: Access is denied.
+Process exiting with code: 0
+
+fixed========================
+
+55  started (thread) dns,packet id:e049 rd:1 tc:0 aa:0 qr:0 ra:0 QUERY 'no error'
+0panic: runtime error: index out of range [1] with length 1
+
+goroutine 18 [running]:
+main.parseMessage(0xc00000e440, 0x33, 0x37)
+	c:/Users/yaros/Desktop/golang/go-syslogParser/init.go:162 +0x1666
+created by main.listen
+	c:/Users/yaros/Desktop/golang/go-syslogParser/init.go:251 +0x16f
+panic: runtime error: index out of range [1] with length 1
+
+goroutine 34 [running]:
+main.parseMessage(0xc00000e4c0, 0x3c, 0x37)
+	c:/Users/yaros/Desktop/golang/go-syslogParser/init.go:162 +0x1666
+created by main.listen
+	c:/Users/yaros/Desktop/golang/go-syslogParser/init.go:251 +0x16f
+Process exiting with code: 0
+
+fixed==========================
+55  started (thread) dhcp,debug,packet dhcp-alert on bridge sending discover with id 2702261777 to 255.255.255.255
+from 192.168.88.1:39038
+
+55  started (thread) dhcp,debug,packet     secs = 64
+00panic: runtime error: index out of range [1] with length 1
+
+goroutine 15 [running]:
+main.getMsgfromRAW(0xc0001d4000, 0x5d, 0x0, 0x0)
+	c:/Users/yaros/Desktop/golang/go-syslogParser/init.go:77 +0xed
+main.parseMessage(0xc0001d4000, 0x5d, 0x37)
+	c:/Users/yaros/Desktop/golang/go-syslogParser/init.go:218 +0x8a5
+created by main.listen
+	c:/Users/yaros/Desktop/golang/go-syslogParser/init.go:255 +0x16f
 could not remove c:\Users\yaros\Desktop\golang\go-syslogParser\__debug_bin: remove c:\Users\yaros\Desktop\golang\go-syslogParser\__debug_bin: Access is denied.
 Process exiting with code: 0
