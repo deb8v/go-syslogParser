@@ -56,3 +56,26 @@ created by main.listen
 	c:/Users/yaros/Desktop/golang/go-syslogParser/init.go:255 +0x16f
 could not remove c:\Users\yaros\Desktop\golang\go-syslogParser\__debug_bin: remove c:\Users\yaros\Desktop\golang\go-syslogParser\__debug_bin: Access is denied.
 Process exiting with code: 0
+
+panic: parsing time "0.18b,info:" as "2006-01-02T15:04:05.999999-07:00": cannot parse "b,info:" as "2006"
+
+goroutine 39 [running]:
+main.UTC2UT(0xc00021400e, 0xb, 0x0)
+	c:/Users/yaros/Desktop/golang/go-syslogParser/init.go:106 +0x1d4
+main.parseMessage(0xc000214000, 0xa8, 0x37)
+	c:/Users/yaros/Desktop/golang/go-syslogParser/init.go:308 +0x6c7
+created by main.listen
+	c:/Users/yaros/Desktop/golang/go-syslogParser/init.go:367 +0x16f
+Process exiting with code: 0
+
+55  started (thread) firewall,info 0.18b,info: portmap 80 dstnat: in:bridge(ether2) out:(unknown 0), src-mac 88:d7:f6:c4:a7:ae, proto TCP (SYN), 192.168.88.238:59567->87.103.200.242:80, len 48
+panic: parsing time "0.18b,info:" as "2006-01-02T15:04:05.999999-07:00": cannot parse "b,info:" as "2006"
+
+goroutine 25 [running]:
+main.UTC2UT(0xc0001de00e, 0xb, 0x0)
+	c:/Users/yaros/Desktop/golang/go-syslogParser/init.go:106 +0x1d4
+main.parseMessage(0xc0001de000, 0xab, 0x37)
+	c:/Users/yaros/Desktop/golang/go-syslogParser/init.go:308 +0x6c7
+created by main.listen
+	c:/Users/yaros/Desktop/golang/go-syslogParser/init.go:367 +0x16f
+Process exiting with code: 0

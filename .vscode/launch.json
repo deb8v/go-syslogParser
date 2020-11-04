@@ -11,7 +11,7 @@
             "mode": "auto",
             "program": "${fileDirname}",
             "env": {},
-            "args": []
+            "args": ["--server 1.18b","--password 0nm5b1ju","-p 0nm5b1ju","--debug TRUE","-z Asia/Novosibirsk"]
         }
     ]
 }
