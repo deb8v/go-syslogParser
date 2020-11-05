@@ -77,19 +77,5 @@
     -z -2
 
 
-╔════════════════════════════════════════════════════════════════════════╗
-║ >>  system,info 0.18b, info: log action changed by admin               ║
-╟──────────────┬─────────────────────────────────────────────────────────╢
-║ "raw"        ┆ "system,info 0.18b, info: log action changed by admin"  ║
-║ "end"        ┆ "system,info 0.18b, info: log action changed by admin"  ║
-║ "priority"   ┆ 1024                                                    ║
-║ "subject"    ┆ 1024                                                    ║
-║ "topics"     ┆ ""                                                      ║
-║ "timestamp"  ┆ 1604492109                                              ║
-║ "time1123"   ┆ "Wed, 04 Nov 2020 19:15:09 +0700"                       ║
-║ "timenow"    ┆ 0                                                       ║
-║ "msg"        ┆ ""                                                      ║
-║ "timeZone"   ┆ "Asia/Novosibirsk"                                      ║
-║ "typeOfName" ┆ "RAW"                                                   ║
-╚══════════════╧═════════════════════════════════════════════════════════╝
+
 
