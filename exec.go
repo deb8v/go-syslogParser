@@ -311,7 +311,34 @@ func listener(messages chan string) {
 	}
 
 }
-
+func makePrioByMessages(msg string) int {
+	//out := []string{}
+	priority := 1024
+	msg = strings.ToUpper(msg)
+	aur := strings.Split(msg, " ")
+	for i := range aur {
+		argsIStr := aur[i]
+		switch argsIStr {
+		case "DEBUG", "BLACKLIST": //7 -debug
+			priority = 7
+		case "SYSTEM, INFO", "CONN", "ACCEPT", "PPP", "PPPOE", "L2TP": //6 -info
+			priority = 6
+		case "SMTP", "AVUPDATE", "VGS": //5 -note
+			priority = 5
+		case "SMTPLOG", "AMTISPAM": //4 -warm
+			priority = 4
+		//case "", "-r": //3 -error
+		//	priority = 3
+		case "SESMGR": //2 -crit
+			priority = 2
+		case "USERAUTH": //1 -alert
+			priority = 1
+		case "HWM": //0 -emerg
+			priority = 0
+		}
+	}
+	return priority
+}
 func main() {
 	argsWithProg := os.Args
 	argsWithoutProg := os.Args[1:]
